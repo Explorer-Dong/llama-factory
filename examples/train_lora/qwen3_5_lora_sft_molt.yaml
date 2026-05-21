@@ -3,12 +3,12 @@ model_name_or_path: /data/models/Qwen3.5-9B  # Path to the pre-trained base mode
 stage: sft                                   # Training stage (Supervised Fine-Tuning)
 do_train: true                               # Flag to enable training
 trust_remote_code: true                      # Allow execution of custom remote code
-enable_thinking: true                        # Enable specialized thinking/reasoning features
+enable_thinking: false                       # Disable specialized thinking/reasoning features for speed
 
 # Dataset & Preprocessing
 dataset: molt_sft_alpaca                     # Name of the dataset being used
 dataset_dir: data                            # Directory where dataset is stored
-template: qwen3_5                            # Prompt template format to apply
+template: qwen3_5_nothink                    # Prompt template format to apply
 cutoff_len: 2048                             # Max sequence length for truncation
 max_samples: 100000                          # Maximum number of training samples
 val_size: 0.2                                # Proportion of data used for validation
@@ -52,6 +52,7 @@ ddp_timeout: 180000000                       # Timeout limit for Distributed Dat
 
 # Logging, Saving & Tracking
 output_dir: saves/Qwen3.5-9B/lora/train/     # Directory to save checkpoints and outputs
+overwrite_output_dir: true                   # Overwrite sft results if rerun
 save_steps: 10                               # Save model checkpoint every 10 steps
 logging_steps: 5                             # Print training logs every 5 steps
 plot_loss: true                              # Generate loss curve plots during training
