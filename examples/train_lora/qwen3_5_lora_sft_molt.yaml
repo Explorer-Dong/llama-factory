@@ -1,0 +1,59 @@
+# Model & General Settings
+model_name_or_path: /data/models/Qwen3.5-9B  # Path to the pre-trained base model
+stage: sft                                   # Training stage (Supervised Fine-Tuning)
+do_train: true                               # Flag to enable training
+trust_remote_code: true                      # Allow execution of custom remote code
+enable_thinking: true                        # Enable specialized thinking/reasoning features
+
+# Dataset & Preprocessing
+dataset: molt_sft_alpaca                     # Name of the dataset being used
+dataset_dir: data                            # Directory where dataset is stored
+template: qwen3_5                            # Prompt template format to apply
+cutoff_len: 2048                             # Max sequence length for truncation
+max_samples: 100000                          # Maximum number of training samples
+val_size: 0.2                                # Proportion of data used for validation
+packing: false                               # Disable packing multiple sequences into one
+preprocessing_num_workers: 16                # Number of CPU threads for data processing
+
+# Multimodal Settings
+image_max_pixels: 589824                     # Maximum pixel count for input images
+image_min_pixels: 1024                       # Minimum pixel count for input images
+video_max_pixels: 65536                      # Maximum pixel count for video frames
+video_min_pixels: 256                        # Minimum pixel count for video frames
+freeze_vision_tower: true                    # Freeze the parameters of the vision encoder
+freeze_multi_modal_projector: true           # Freeze the vision-language alignment projector
+
+# PEFT / LoRA Settings
+finetuning_type: lora                        # Fine-tuning method used (LoRA)
+lora_rank: 8                                 # Rank (r) of the LoRA matrices
+lora_alpha: 16                               # Scaling factor for LoRA
+lora_dropout: 0                              # Dropout probability for LoRA layers
+lora_target: all                             # Target modules to apply LoRA (e.g., all linear)
+
+# Training & Optimization
+num_train_epochs: 1.0                        # Total number of training epochs
+per_device_train_batch_size: 2               # Training batch size per GPU
+gradient_accumulation_steps: 8               # Steps to accumulate gradients before backward pass
+learning_rate: 5.0e-05                       # Initial learning rate
+lr_scheduler_type: cosine                    # Learning rate decay strategy
+warmup_steps: 0                              # Warmup steps for learning rate
+optim: adamw_torch                           # Optimizer to use (AdamW via PyTorch)
+max_grad_norm: 1.0                           # Threshold for gradient clipping
+
+# Evaluation
+eval_strategy: steps                         # Evaluate model based on step count
+eval_steps: 10                               # Run evaluation every 10 steps
+per_device_eval_batch_size: 2                # Evaluation batch size per GPU
+
+# 7. System & Performance
+bf16: true                                   # Use BFloat16 mixed-precision training
+flash_attn: disabled                         # Disable FlashAttention for memory/speed boost
+ddp_timeout: 180000000                       # Timeout limit for Distributed Data Parallel
+
+# Logging, Saving & Tracking
+output_dir: saves/Qwen3.5-9B/lora/train/     # Directory to save checkpoints and outputs
+save_steps: 10                               # Save model checkpoint every 10 steps
+logging_steps: 5                             # Print training logs every 5 steps
+plot_loss: true                              # Generate loss curve plots during training
+report_to: none                              # Disable 3rd-party loggers (like WandB/TensorBoard)
+include_num_input_tokens_seen: true          # Track the total number of processed tokens in logs
