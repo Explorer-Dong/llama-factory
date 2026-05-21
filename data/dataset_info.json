@@ -1,4 +1,7 @@
 {
+  "molt_sft_alpaca": {
+    "file_name": "molt_sft_alpaca.json"
+  },
   "identity": {
     "file_name": "identity.json"
   },
