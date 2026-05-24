@@ -1,5 +1,5 @@
 model_name_or_path: /data/models/Qwen3.5-9B
 adapter_name_or_path: saves/Qwen3.5-9B/lora/train
-template: qwen3_5
+template: qwen3_5_nothink
 infer_backend: huggingface
 enable_thinking: false
